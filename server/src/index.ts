@@ -21,6 +21,7 @@ const typeDefs = `#graphql
   }
 `;
 
+// Dataset de test
 const books = [
   {
     title: "Le Seigneur des Anneaux",
@@ -32,25 +33,23 @@ const books = [
   },
 ];
 
-// Resolvers define how to fetch the types defined in your schema.
-// This resolver retrieves books from the "books" array above.
+// Résolveur qui permet de dire où chercher les types définit dans le schéma, ici pas encore de base de donnée donc on met notre tableau books
+
 const resolvers = {
   Query: {
     books: () => books,
   },
 };
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
+// Pour construire l'objet ApolloServer il suffit de lui donner le schéma et les resolvers que l'on a définit préalablement
 const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
-// Passing an ApolloServer instance to the `startStandaloneServer` function:
-//  1. creates an Express app
-//  2. installs your ApolloServer instance as middleware
-//  3. prepares your app to handle incoming requests
+
+// Permet de créer le serveur qui va écouter les requêtes qu'on a définit (ici juste pour obtenir les livres)
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 },
 });
-console.log(`🚀  Server ready at: ${url}`);
+
+console.log(`🚀 Server ready at: ${url}`);
