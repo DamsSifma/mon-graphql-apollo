@@ -1,5 +1,5 @@
 // Dataset de test
-export const books = [
+export const books: Book[] = [
   {
     title: "Le Seigneur des Anneaux",
     author: "J.R.R. Tolkien",
