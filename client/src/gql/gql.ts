@@ -14,12 +14,26 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query GetBooks {\n    books {\n      title\n      author\n    }\n  }\n": typeof types.GetBooksDocument,
-    "\n  mutation AddBook($title: String, $author: String) {\n    addBook(title: $title, author: $author) {\n      code\n      success\n      message\n      book {\n        title\n        author\n      }\n    }\n  }\n": typeof types.AddBookDocument,
+    "\n  query GetBooksEnhanced($filter: BookFilter, $first: Int, $after: String) {\n    books(filter: $filter, first: $first, after: $after) {\n      edges {\n        node {\n          id\n          title\n          description\n          publishedYear\n          isbn\n          pages\n          rating\n          coverUrl\n          createdAt\n          author {\n            id\n            name\n            bio\n            birthYear\n            nationality\n          }\n          genres {\n            id\n            name\n            description\n          }\n        }\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      totalCount\n    }\n  }\n": typeof types.GetBooksEnhancedDocument,
+    "\n  query GetBookDetails($id: ID!) {\n    book(id: $id) {\n      id\n      title\n      description\n      publishedYear\n      isbn\n      pages\n      rating\n      coverUrl\n      createdAt\n      author {\n        id\n        name\n        bio\n        birthYear\n        nationality\n        books {\n          id\n          title\n          publishedYear\n        }\n      }\n      genres {\n        id\n        name\n        description\n      }\n    }\n  }\n": typeof types.GetBookDetailsDocument,
+    "\n  query GetAuthors {\n    authors {\n      id\n      name\n      bio\n      birthYear\n      nationality\n      books {\n        id\n        title\n        publishedYear\n        rating\n      }\n    }\n  }\n": typeof types.GetAuthorsDocument,
+    "\n  query GetGenres {\n    genres {\n      id\n      name\n      description\n    }\n  }\n": typeof types.GetGenresDocument,
+    "\n  query SearchBooks($query: String!) {\n    searchBooks(query: $query) {\n      id\n      title\n      description\n      publishedYear\n      rating\n      author {\n        name\n      }\n      genres {\n        name\n      }\n    }\n  }\n": typeof types.SearchBooksDocument,
+    "\n  mutation AddBook($input: AddBookInput!) {\n    addBook(input: $input) {\n      code\n      success\n      message\n      book {\n        id\n        title\n        description\n        publishedYear\n        author {\n          name\n        }\n        genres {\n          name\n        }\n      }\n    }\n  }\n": typeof types.AddBookDocument,
+    "\n  mutation AddAuthor($input: AddAuthorInput!) {\n    addAuthor(input: $input) {\n      code\n      success\n      message\n      author {\n        id\n        name\n        bio\n        birthYear\n        nationality\n      }\n    }\n  }\n": typeof types.AddAuthorDocument,
+    "\n  mutation UpdateBookRating($bookId: ID!, $rating: Float!) {\n    updateBookRating(bookId: $bookId, rating: $rating) {\n      id\n      title\n      rating\n    }\n  }\n": typeof types.UpdateBookRatingDocument,
+    "\n  mutation DeleteBook($id: ID!) {\n    deleteBook(id: $id)\n  }\n": typeof types.DeleteBookDocument,
 };
 const documents: Documents = {
-    "\n  query GetBooks {\n    books {\n      title\n      author\n    }\n  }\n": types.GetBooksDocument,
-    "\n  mutation AddBook($title: String, $author: String) {\n    addBook(title: $title, author: $author) {\n      code\n      success\n      message\n      book {\n        title\n        author\n      }\n    }\n  }\n": types.AddBookDocument,
+    "\n  query GetBooksEnhanced($filter: BookFilter, $first: Int, $after: String) {\n    books(filter: $filter, first: $first, after: $after) {\n      edges {\n        node {\n          id\n          title\n          description\n          publishedYear\n          isbn\n          pages\n          rating\n          coverUrl\n          createdAt\n          author {\n            id\n            name\n            bio\n            birthYear\n            nationality\n          }\n          genres {\n            id\n            name\n            description\n          }\n        }\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      totalCount\n    }\n  }\n": types.GetBooksEnhancedDocument,
+    "\n  query GetBookDetails($id: ID!) {\n    book(id: $id) {\n      id\n      title\n      description\n      publishedYear\n      isbn\n      pages\n      rating\n      coverUrl\n      createdAt\n      author {\n        id\n        name\n        bio\n        birthYear\n        nationality\n        books {\n          id\n          title\n          publishedYear\n        }\n      }\n      genres {\n        id\n        name\n        description\n      }\n    }\n  }\n": types.GetBookDetailsDocument,
+    "\n  query GetAuthors {\n    authors {\n      id\n      name\n      bio\n      birthYear\n      nationality\n      books {\n        id\n        title\n        publishedYear\n        rating\n      }\n    }\n  }\n": types.GetAuthorsDocument,
+    "\n  query GetGenres {\n    genres {\n      id\n      name\n      description\n    }\n  }\n": types.GetGenresDocument,
+    "\n  query SearchBooks($query: String!) {\n    searchBooks(query: $query) {\n      id\n      title\n      description\n      publishedYear\n      rating\n      author {\n        name\n      }\n      genres {\n        name\n      }\n    }\n  }\n": types.SearchBooksDocument,
+    "\n  mutation AddBook($input: AddBookInput!) {\n    addBook(input: $input) {\n      code\n      success\n      message\n      book {\n        id\n        title\n        description\n        publishedYear\n        author {\n          name\n        }\n        genres {\n          name\n        }\n      }\n    }\n  }\n": types.AddBookDocument,
+    "\n  mutation AddAuthor($input: AddAuthorInput!) {\n    addAuthor(input: $input) {\n      code\n      success\n      message\n      author {\n        id\n        name\n        bio\n        birthYear\n        nationality\n      }\n    }\n  }\n": types.AddAuthorDocument,
+    "\n  mutation UpdateBookRating($bookId: ID!, $rating: Float!) {\n    updateBookRating(bookId: $bookId, rating: $rating) {\n      id\n      title\n      rating\n    }\n  }\n": types.UpdateBookRatingDocument,
+    "\n  mutation DeleteBook($id: ID!) {\n    deleteBook(id: $id)\n  }\n": types.DeleteBookDocument,
 };
 
 /**
@@ -39,11 +53,39 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetBooks {\n    books {\n      title\n      author\n    }\n  }\n"): (typeof documents)["\n  query GetBooks {\n    books {\n      title\n      author\n    }\n  }\n"];
+export function graphql(source: "\n  query GetBooksEnhanced($filter: BookFilter, $first: Int, $after: String) {\n    books(filter: $filter, first: $first, after: $after) {\n      edges {\n        node {\n          id\n          title\n          description\n          publishedYear\n          isbn\n          pages\n          rating\n          coverUrl\n          createdAt\n          author {\n            id\n            name\n            bio\n            birthYear\n            nationality\n          }\n          genres {\n            id\n            name\n            description\n          }\n        }\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      totalCount\n    }\n  }\n"): (typeof documents)["\n  query GetBooksEnhanced($filter: BookFilter, $first: Int, $after: String) {\n    books(filter: $filter, first: $first, after: $after) {\n      edges {\n        node {\n          id\n          title\n          description\n          publishedYear\n          isbn\n          pages\n          rating\n          coverUrl\n          createdAt\n          author {\n            id\n            name\n            bio\n            birthYear\n            nationality\n          }\n          genres {\n            id\n            name\n            description\n          }\n        }\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      totalCount\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation AddBook($title: String, $author: String) {\n    addBook(title: $title, author: $author) {\n      code\n      success\n      message\n      book {\n        title\n        author\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation AddBook($title: String, $author: String) {\n    addBook(title: $title, author: $author) {\n      code\n      success\n      message\n      book {\n        title\n        author\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query GetBookDetails($id: ID!) {\n    book(id: $id) {\n      id\n      title\n      description\n      publishedYear\n      isbn\n      pages\n      rating\n      coverUrl\n      createdAt\n      author {\n        id\n        name\n        bio\n        birthYear\n        nationality\n        books {\n          id\n          title\n          publishedYear\n        }\n      }\n      genres {\n        id\n        name\n        description\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetBookDetails($id: ID!) {\n    book(id: $id) {\n      id\n      title\n      description\n      publishedYear\n      isbn\n      pages\n      rating\n      coverUrl\n      createdAt\n      author {\n        id\n        name\n        bio\n        birthYear\n        nationality\n        books {\n          id\n          title\n          publishedYear\n        }\n      }\n      genres {\n        id\n        name\n        description\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetAuthors {\n    authors {\n      id\n      name\n      bio\n      birthYear\n      nationality\n      books {\n        id\n        title\n        publishedYear\n        rating\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetAuthors {\n    authors {\n      id\n      name\n      bio\n      birthYear\n      nationality\n      books {\n        id\n        title\n        publishedYear\n        rating\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetGenres {\n    genres {\n      id\n      name\n      description\n    }\n  }\n"): (typeof documents)["\n  query GetGenres {\n    genres {\n      id\n      name\n      description\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query SearchBooks($query: String!) {\n    searchBooks(query: $query) {\n      id\n      title\n      description\n      publishedYear\n      rating\n      author {\n        name\n      }\n      genres {\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query SearchBooks($query: String!) {\n    searchBooks(query: $query) {\n      id\n      title\n      description\n      publishedYear\n      rating\n      author {\n        name\n      }\n      genres {\n        name\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation AddBook($input: AddBookInput!) {\n    addBook(input: $input) {\n      code\n      success\n      message\n      book {\n        id\n        title\n        description\n        publishedYear\n        author {\n          name\n        }\n        genres {\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation AddBook($input: AddBookInput!) {\n    addBook(input: $input) {\n      code\n      success\n      message\n      book {\n        id\n        title\n        description\n        publishedYear\n        author {\n          name\n        }\n        genres {\n          name\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation AddAuthor($input: AddAuthorInput!) {\n    addAuthor(input: $input) {\n      code\n      success\n      message\n      author {\n        id\n        name\n        bio\n        birthYear\n        nationality\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation AddAuthor($input: AddAuthorInput!) {\n    addAuthor(input: $input) {\n      code\n      success\n      message\n      author {\n        id\n        name\n        bio\n        birthYear\n        nationality\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateBookRating($bookId: ID!, $rating: Float!) {\n    updateBookRating(bookId: $bookId, rating: $rating) {\n      id\n      title\n      rating\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateBookRating($bookId: ID!, $rating: Float!) {\n    updateBookRating(bookId: $bookId, rating: $rating) {\n      id\n      title\n      rating\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation DeleteBook($id: ID!) {\n    deleteBook(id: $id)\n  }\n"): (typeof documents)["\n  mutation DeleteBook($id: ID!) {\n    deleteBook(id: $id)\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
